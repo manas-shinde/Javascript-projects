@@ -82,6 +82,16 @@ h1 {
   left: 2rem;
 }
 
+.reset {
+  position: absolute;
+  top: 2rem;
+  left: 25rem;
+}
+.save {
+  position: absolute;
+  top: 2rem;
+  left: 50rem;
+}
 .guess {
   background: none;
   border: 4px solid #eee;
