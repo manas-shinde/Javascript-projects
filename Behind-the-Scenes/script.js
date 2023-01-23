@@ -48,3 +48,39 @@ function deleteShoppingCart() {
 
 //the variable those are created with 'var' are assign as a windows object property.
 console.log(totalProduct === window.totalProduct);
+
+/** Use of 'this' keyword */
+
+// console.log(this);
+
+const calcAge = function (birthYear) {
+  console.log(2030 - birthYear);
+  // console.log(this);
+};
+
+const calcAgeArraow = birthYear => {
+  console.log(2030 - birthYear);
+  // console.log(this);
+};
+//For regular function this will be undefine
+calcAge(1991);
+//But in arrow function case this will point to window object or parent
+calcAgeArraow(2000);
+
+const manas = {
+  birthYear: 2000,
+  calcAge: function () {
+    console.log(this);
+    console.log(2017 - this.birthYear);
+  },
+};
+
+manas.calcAge();
+
+const mansi = {
+  birthYear: 2007,
+};
+
+mansi.calcAge = manas.calcAge;
+//Now if call the calcAge is present in mansi object , this will pointing to the mansi. this is dynamic keyword is associate to who calls it.
+mansi.calcAge();
