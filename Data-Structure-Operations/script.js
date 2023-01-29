@@ -133,3 +133,12 @@ printGoals(...game.scored);
 //7
 team1 < team2 && console.log('Team 1 Win the game !!');
 team1 > team2 && console.log('Team 2 Win the game !!');
+
+/**------------------------
+ * For of loop for arrays
+ */
+let menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);
+for (const [i, e] of menu.entries()) {
+  console.log(i, e);
+}
