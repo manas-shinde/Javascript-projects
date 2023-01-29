@@ -1,6 +1,7 @@
 'use strict';
 
 /*
+if create a variable with var then it createa property on window object
 Variable Hosting
 for var - if we call the variable before declaring it then we get the undefine value.
 to overcome this error ES6 had two new variable types - 
