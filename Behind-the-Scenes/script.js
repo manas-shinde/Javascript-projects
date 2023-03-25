@@ -1,12 +1,13 @@
 'use strict';
 
 /*
-if create a variable with var then it createa property on window object
+if create a variable with var then it create a property on window object
+
 Variable Hosting
 for var - if we call the variable before declaring it then we get the undefine value.
 to overcome this error ES6 had two new variable types - 
 1) let 2) const
-let and const are block scope and if we use them before declaring it then it shows the RefernceError (beacuse these variables present in TDZ - temporary  Dead Zone)
+let and const are block scope and if we use them before declaring it then it shows the RefernceError (beacuse these variables present in TDZ - Temporary Dead Zone)
 */
 console.log(myFirstName);
 // console.log(myAge);
