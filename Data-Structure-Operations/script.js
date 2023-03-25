@@ -57,8 +57,9 @@ console.log(weekDays);
 restaurant.orderPizza('Panner', 'onions', 'mushrooms', 'chesse');
 
 /**
- * ///////////////////////////////////////////////////
+ *
  * Coding Challenge - 1
+ *
  */
 
 const game = {
@@ -137,16 +138,17 @@ team1 > team2 && console.log('Team 2 Win the game !!');
 /**------------------------
  * For of loop for arrays
  */
+console.log('--------- Looping over the array ---------');
 let menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 console.log(menu);
 for (const [i, e] of menu.entries()) {
   console.log(i, e);
 }
 
-console.clear();
+// console.clear();
 
 /**Optional chaining */
-
+console.log('--------- Optional Chaining ---------');
 const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
 for (let day of days) {
