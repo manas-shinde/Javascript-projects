@@ -155,3 +155,27 @@ for (let day of days) {
   let openAt = restaurant.openingHours[day]?.open ?? 'closed';
   console.log(`Resturnt Open On ${day} ${openAt}`);
 }
+/**
+ *
+ * Looping over the objects
+ *
+ */
+
+// PROPERTY NAMES
+let properites = Object.keys(restaurant.openingHours);
+
+let openStr = `we are open on ${properites.length} days : `;
+for (let day of Object.keys(restaurant.openingHours)) {
+  openStr += `${day} ,`;
+}
+console.log(openStr);
+
+// PROPERTY VALUES
+const values = Object.values(restaurant.openingHours);
+console.log(values);
+
+// Entire object
+const entire = Object.entries(restaurant.openingHours);
+for (let [day, { open, close }] of entire) {
+  console.log(`On ${day} we open at ${open} and close at ${close}`);
+}
