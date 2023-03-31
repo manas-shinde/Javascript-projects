@@ -1,9 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
 // Data needed for first part of the section
 const restaurant = {
   name: 'Classico Italiano',
@@ -285,4 +281,74 @@ console.log(
 for (let [min, event] of gameEvents) {
   const half = min <= 45 ? 'FIRST' : 'SECOND';
   console.log(`[${half} HALF] ${min}: ${event}`);
+}
+
+console.log('🚀 ~ file: script.js:292 ~ String operations:');
+let username = 'mAnAs';
+let usernameLower = username.toLowerCase();
+let userCorrectName = usernameLower[0].toUpperCase() + usernameLower.slice(1);
+console.log('🚀 ~ file: script.js:295 ~ userCorrectName:', userCorrectName);
+
+console.clear();
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+first_name
+Some_Variable 
+calculate_AGE
+delayed_departure
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀 
+*/
+function convertToCamelCase(test_data) {
+  let [first, second] = test_data.split('_');
+  let result = first + second[0].toUpperCase() + second.slice(1).toLowerCase();
+  return result;
+}
+
+console.log(convertToCamelCase('underscore_case'));
+console.log(convertToCamelCase('first_name'));
+console.log(convertToCamelCase('Some_Variable'));
+console.log(convertToCamelCase('calculate_AGE'));
+console.log(convertToCamelCase('delayed_departure'));
+
+console.clear();
+
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+const getCode = str => str.slice(0, 3).toUpperCase();
+
+for (let flight of flights.split('+')) {
+  let [type, from, to, time] = flight.split(';');
+
+  type = type.replace(/_/, ' ').replace(/_/, ' ').trim();
+
+  let result = `${type.startsWith('Delayed') ? '🔴' : ''}${type} from ${getCode(
+    from
+  )} to ${getCode(to)} (${time.replace(':', 'h')})`.padStart(30);
+
+  console.log(result);
 }
