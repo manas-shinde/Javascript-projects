@@ -48,3 +48,12 @@ const transformer = (str, fun) => {
 
 transformer('Javascript is good !', oneWord);
 transformer('Java is better.', upperFirstWord);
+
+/////////// Function returning function ///////////
+
+const greet = greeting => name => console.log(`${greeting} ${name}`);
+
+let greetHey = greet('Hey');
+greetHey('Manas');
+
+greet('Good Moring')('Programmer');
