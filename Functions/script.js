@@ -105,3 +105,28 @@ bookFlight.apply(swist, args);
 console.log(swist);
 
 bookFlight.call(enrowings, ...args);
+
+// Bind method
+const bookEWFlights = bookFlight.bind(enrowings);
+const bookSXFlights = bookFlight.bind(swist);
+const bookLHFlights = bookFlight.bind(lufthansa);
+
+bookEWFlights(11, 'manas');
+
+const bookEW23 = bookFlight.bind(enrowings, 23);
+bookEW23('martha');
+bookEW23('Pablo');
+console.log(enrowings);
+
+// With Event Listener
+lufthansa.planes = 200;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(`Total plans are ${this.planes}`);
+};
+
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
