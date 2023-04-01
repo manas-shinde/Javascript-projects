@@ -57,3 +57,51 @@ let greetHey = greet('Hey');
 greetHey('Manas');
 
 greet('Good Moring')('Programmer');
+
+/////////// Use of call and apply methods ///////////
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iatacode: 'LH',
+  bookings: [],
+  bookFlight(flightNum, passangerName) {
+    console.log(
+      `${passangerName} booked the seat on ${this.airline} flight ${this.iatacode} ${flightNum}.`
+    );
+    this.bookings.push({
+      flight: `${this.iatacode} ${flightNum}`,
+      passangerName,
+    });
+  },
+};
+
+lufthansa.bookFlight(234, 'Manas Shinde');
+console.log(lufthansa);
+
+const enrowings = {
+  airline: 'Enrowings',
+  iatacode: 'EW',
+  bookings: [],
+};
+
+const bookFlight = lufthansa.bookFlight;
+
+bookFlight.call(enrowings, 123, 'John');
+bookFlight.call(lufthansa, 456, 'Sarah');
+
+console.log(enrowings);
+console.log(lufthansa);
+
+const swist = {
+  airline: 'Swist',
+  iatacode: 'SX',
+  bookings: [],
+};
+
+// apply() is same as call method the only differnce is it require array of args
+const args = [789, 'xyz'];
+bookFlight.apply(swist, args);
+
+console.log(swist);
+
+bookFlight.call(enrowings, ...args);
