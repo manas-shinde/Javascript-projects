@@ -196,3 +196,10 @@ const poll = {
 document
   .querySelector('.poll')
   .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+// IIFE
+(function () {
+  console.log('This will never run again');
+});
+
+(() => console.log('This will ALSO never run again'))();
