@@ -203,3 +203,31 @@ document
 });
 
 (() => console.log('This will ALSO never run again'))();
+
+// Closures
+
+let f;
+
+const g = function () {
+  let a = 22;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+g();
+f();
+console.dir(f);
+
+const boardPassangers = function (n, wait) {
+  let perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`we are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, 1000);
+
+  console.log(`Will start boarding passenger in ${wait} seconds`);
+};
+
+boardPassangers(80, 3);
