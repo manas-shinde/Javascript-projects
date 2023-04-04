@@ -61,93 +61,114 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+const displayMovements = (movements) => {
+  containerMovements.innerHTML = "";
+
+  movements.forEach((mov, i) => {
+    let transactionType = mov > 0 ? "deposit" : "withdrawal";
+
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${transactionType}">${
+      i + 1
+    } ${transactionType}</div>
+      <div class="movements__value">${Math.abs(mov)}€</div>
+    </div>
+  `;
+
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+};
+
+displayMovements(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ["USD", "United States dollar"],
-  ["EUR", "Euro"],
-  ["GBP", "Pound sterling"],
-]);
+// const currencies = new Map([
+//   ["USD", "United States dollar"],
+//   ["EUR", "Euro"],
+//   ["GBP", "Pound sterling"],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-/////////////////////////////////////////////////
-// Simple Array Methods
-let arr = ["a", "b", "c", "d", "e"];
+// /////////////////////////////////////////////////
+// // Simple Array Methods
+// let arr = ["a", "b", "c", "d", "e"];
 
-// SLICE
-console.log(arr.slice(2));
-console.log(arr.slice(2, 4));
-console.log(arr.slice(-2));
-console.log(arr.slice(-1));
-console.log(arr.slice(1, -2));
-console.log(arr.slice());
-console.log([...arr]);
+// // SLICE
+// console.log(arr.slice(2));
+// console.log(arr.slice(2, 4));
+// console.log(arr.slice(-2));
+// console.log(arr.slice(-1));
+// console.log(arr.slice(1, -2));
+// console.log(arr.slice());
+// console.log([...arr]);
 
-// SPLICE
-// console.log(arr.splice(2));
-arr.splice(-1);
-console.log(arr);
-arr.splice(1, 2);
-console.log(arr);
+// // SPLICE
+// // console.log(arr.splice(2));
+// arr.splice(-1);
+// console.log(arr);
+// arr.splice(1, 2);
+// console.log(arr);
 
-// REVERSE
-arr = ["a", "b", "c", "d", "e"];
-const arr2 = ["j", "i", "h", "g", "f"];
-console.log(arr2.reverse());
-console.log(arr2);
+// // REVERSE
+// arr = ["a", "b", "c", "d", "e"];
+// const arr2 = ["j", "i", "h", "g", "f"];
+// console.log(arr2.reverse());
+// console.log(arr2);
 
-// CONCAT
-const letters = arr.concat(arr2);
-console.log(letters);
-console.log([...arr, ...arr2]);
+// // CONCAT
+// const letters = arr.concat(arr2);
+// console.log(letters);
+// console.log([...arr, ...arr2]);
 
-// JOIN
-console.log(letters.join(" - "));
+// // JOIN
+// console.log(letters.join(" - "));
 
-///////////////////////////////////////
-// The new at Method
-const arr1 = [23, 11, 64];
-console.log(arr1[0]);
-console.log(arr1.at(0));
+// ///////////////////////////////////////
+// // The new at Method
+// const arr1 = [23, 11, 64];
+// console.log(arr1[0]);
+// console.log(arr1.at(0));
 
-// getting last array element
-console.log(arr1[arr.length - 1]);
-console.log(arr1.slice(-1)[0]);
-console.log(arr1.at(-1));
+// // getting last array element
+// console.log(arr1[arr.length - 1]);
+// console.log(arr1.slice(-1)[0]);
+// console.log(arr1.at(-1));
 
-console.log("jonas".at(0));
-console.log("jonas".at(-1));
+// console.log("jonas".at(0));
+// console.log("jonas".at(-1));
 
-///////////////////////////////////////
-// Looping Arrays: forEach
+// ///////////////////////////////////////
+// // Looping Arrays: forEach
 
-console.clear();
+// console.clear();
 
-const movs = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(`Transaction ID \t| Type \t| Amount`);
-movs.forEach((mov, i, arr) => {
-  if (mov > 0) {
-    console.log(`\t ${i} \t Credited : ${Math.abs(mov)}`);
-  } else {
-    console.log(`\t ${i} \t Debited : ${Math.abs(mov)}`);
-  }
-});
+// const movs = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// console.log(`Transaction ID \t| Type \t| Amount`);
+// movs.forEach((mov, i, arr) => {
+//   if (mov > 0) {
+//     console.log(`\t ${i} \t Credited : ${Math.abs(mov)}`);
+//   } else {
+//     console.log(`\t ${i} \t Debited : ${Math.abs(mov)}`);
+//   }
+// });
 
-///////////////////////////////////////
-// Looping Map: forEach
+// ///////////////////////////////////////
+// // Looping Map: forEach
 
-currencies.forEach((value, key, map) => {
-  console.log(`${key} : ${value}`);
-});
+// currencies.forEach((value, key, map) => {
+//   console.log(`${key} : ${value}`);
+// });
 
-///////////////////////////////////////
-// Looping set: forEach
+// ///////////////////////////////////////
+// // Looping set: forEach
 
-const tempSet = new Set(["USD", "EUR", "GBP"]);
+// const tempSet = new Set(["USD", "EUR", "GBP"]);
 
-tempSet.forEach((value, set) => {
-  console.log(value);
-});
+// tempSet.forEach((value, set) => {
+//   console.log(value);
+// });
