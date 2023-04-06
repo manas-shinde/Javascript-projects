@@ -82,6 +82,18 @@ const displayMovements = (movements) => {
 
 displayMovements(account1.movements);
 
+const createUsername = (accounts) => {
+  accounts.forEach((user) => {
+    user.username = user.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+
+createUsername(accounts);
+console.log(accounts);
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -222,3 +234,12 @@ const eurToUsd = 1.2;
 const movemetsUsd = movements.map((mov) => mov * eurToUsd);
 
 console.log(`Movements to USD : ${movemetsUsd}`);
+
+// Filter Method
+
+const depositeCash = movements.filter((amount) => amount > 0);
+
+const windrawCash = movements.filter((amt) => amt < 0);
+
+console.log(depositeCash);
+console.log(windrawCash);
