@@ -213,3 +213,12 @@ const checkDogs = (dogsJulia, dogsKate) => {
 
 const dogsJulia = [3, 5, 2, 12, 7];
 const dogsKate = [4, 1, 15, 8, 3];
+
+// Map Method
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const eurToUsd = 1.2;
+
+const movemetsUsd = movements.map((mov) => mov * eurToUsd);
+
+console.log(`Movements to USD : ${movemetsUsd}`);
