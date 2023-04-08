@@ -82,6 +82,14 @@ const displayMovements = (movements) => {
 
 displayMovements(account1.movements);
 
+const currentBalance = (movements) => {
+  let balance = movements.reduce((acc, cur) => acc + cur, 0);
+
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+currentBalance(account1.movements);
+
 const createUsername = (accounts) => {
   accounts.forEach((user) => {
     user.username = user.owner
@@ -94,6 +102,7 @@ const createUsername = (accounts) => {
 
 createUsername(accounts);
 console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -243,3 +252,9 @@ const windrawCash = movements.filter((amt) => amt < 0);
 
 console.log(depositeCash);
 console.log(windrawCash);
+
+// Reduce Method
+
+const balance = movements.reduce((acc, cur, i, arr) => acc + cur, 0);
+
+console.log("Current Balance : ", balance);
