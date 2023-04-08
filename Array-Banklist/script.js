@@ -85,10 +85,35 @@ displayMovements(account1.movements);
 const currentBalance = (movements) => {
   let balance = movements.reduce((acc, cur) => acc + cur, 0);
 
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance} €`;
 };
 
 currentBalance(account1.movements);
+
+const calcDisplaySummary = (movements) => {
+  const income = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  labelSumIn.textContent = `${income} €`;
+
+  const outcome = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, cur) => acc + cur);
+
+  labelSumOut.textContent = `${Math.abs(outcome)} €`;
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposite) => (deposite * 1.2) / 100)
+    .filter((int, i) => {
+      return int >= 1;
+    })
+    .reduce((acc, cur) => acc + cur);
+  labelSumInterest.textContent = `${interest} €`;
+};
+
+calcDisplaySummary(account1.movements);
 
 const createUsername = (accounts) => {
   accounts.forEach((user) => {
