@@ -80,10 +80,13 @@ const displayMovements = (movements) => {
   });
 };
 
-const currentBalance = (movements) => {
-  let balance = movements.reduce((acc, cur) => acc + cur, 0);
+const currentBalance = (currentAccount) => {
+  currentAccount.balance = currentAccount.movements.reduce(
+    (acc, cur) => acc + cur,
+    0
+  );
 
-  labelBalance.textContent = `${balance} €`;
+  labelBalance.textContent = `${currentAccount.balance} €`;
 };
 
 const calcDisplaySummary = (account) => {
@@ -118,9 +121,20 @@ const createUsername = (accounts) => {
       .join("");
   });
 };
+const updateUI = (account) => {
+  // Display movements
+  displayMovements(account.movements);
 
+  // Display balance
+  currentBalance(account);
+
+  // Display Summary
+  calcDisplaySummary(account);
+};
 createUsername(accounts);
 console.log("Users : ", accounts);
+
+/*  Login Feature  */
 
 // Event handler
 let currentAccount;
@@ -138,20 +152,43 @@ btnLogin.addEventListener("click", function (e) {
     }`;
 
     containerApp.style.opacity = 100;
+
     // Clear the fields
     inputLoginPin.value = inputLoginUsername.value = "";
 
-    // Display movements
-    displayMovements(currentAccount.movements);
-
-    // Display balance
-    currentBalance(currentAccount.movements);
-
-    // Display Summary
-    calcDisplaySummary(currentAccount);
+    // Update UI
+    updateUI(currentAccount);
   }
 });
 
+/** Transaction feature  */
+btnTransfer.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  let amount = Number(inputTransferAmount.value);
+
+  let recevierAcc = accounts.find(
+    (acc) => acc.username === inputTransferTo.value
+  );
+
+  //Validate transfer amount
+  if (
+    amount > 0 &&
+    recevierAcc &&
+    amount <= currentAccount.balance &&
+    recevierAcc?.username != currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount);
+    recevierAcc.movements.push(amount);
+    console.log("Transfer done!");
+  }
+
+  // Update UI
+  updateUI(currentAccount);
+
+  // Clear the fields
+  inputTransferAmount.value = inputTransferTo.value = "";
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
