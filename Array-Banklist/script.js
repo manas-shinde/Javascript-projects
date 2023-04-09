@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-const displayMovements = (movements) => {
+const displayMovements = (movements, sort = false) => {
   containerMovements.innerHTML = "";
 
-  movements.forEach((mov, i) => {
+  let transactions = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  transactions.forEach((mov, i) => {
     let transactionType = mov > 0 ? "deposit" : "withdrawal";
 
     const html = `
@@ -189,6 +191,26 @@ btnTransfer.addEventListener("click", (e) => {
   // Clear the fields
   inputTransferAmount.value = inputTransferTo.value = "";
 });
+/** Loan feature */
+btnLoan.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  let loanAmount = Number(inputLoanAmount.value);
+
+  if (
+    loanAmount > 0 &&
+    currentAccount.movements.some((mov) => mov >= loanAmount * 0.1)
+  ) {
+    // Update Transactions
+    currentAccount.movements.push(loanAmount);
+
+    // Update UI
+    updateUI(currentAccount);
+
+    // Clear the fields
+    inputLoanAmount.value = "";
+  }
+});
 
 /** Close Account feature */
 btnClose.addEventListener("close", (e) => {
@@ -213,7 +235,15 @@ btnClose.addEventListener("close", (e) => {
   // Clear the fields
   inputCloseUsername.value = inputClosePin.value = "";
 });
+/** SOrt feature */
 
+let isSorted = false;
+btnSort.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  displayMovements(currentAccount.movements, !isSorted);
+  isSorted = !isSorted;
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
