@@ -172,15 +172,25 @@ const updateUI = function (acc) {
   // Display summary
   calcDisplaySummary(acc);
 };
-const setCurrentTime = () => {
+const setCurrentTime = locale => {
   let now = new Date();
-  let day = `${now.getDate()}`.padStart(2, '0');
-  let month = `${now.getMonth()}`.padStart(2, '0');
-  let year = now.getFullYear();
-  let hour = now.getHours();
-  let min = now.getMinutes();
+  // let day = `${now.getDate()}`.padStart(2, '0');
+  // let month = `${now.getMonth()}`.padStart(2, '0');
+  // let year = now.getFullYear();
+  // let hour = now.getHours();
+  // let min = now.getMinutes();
+  // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
 
-  labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+  let option = {
+    hour: 'numeric',
+    mintue: 'numeric',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    weekday: 'long',
+  };
+
+  labelDate.textContent = Intl.DateTimeFormat(locale, option).format(now);
 };
 ///////////////////////////////////////
 // Event handlers
@@ -202,7 +212,7 @@ btnLogin.addEventListener('click', function (e) {
     }`;
     containerApp.style.opacity = 100;
 
-    setCurrentTime();
+    setCurrentTime(currentAccount.locale);
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
