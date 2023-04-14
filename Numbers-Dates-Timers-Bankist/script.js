@@ -125,6 +125,8 @@ const displayMovements = function (acc, sort = false) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
+
+// Format the currency using 'Intl' API
 const formatCurrency = (value, currency, locale) => {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
@@ -268,17 +270,39 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const loanAmount = Number(inputLoanAmount.value);
 
-  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+  if (
+    loanAmount > 0 &&
+    currentAccount.movements.some(mov => mov >= loanAmount * 0.1)
+  ) {
+    setTimeout(() => {
+      // Add movement
+      currentAccount.movements.push(loanAmount);
 
-    // Update date and time for loan
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Update date and time for loan
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+
+      // Added the alert
+      alert(
+        `Loan of amount ${formatCurrency(
+          loanAmount,
+          currentAccount.currency,
+          currentAccount.locale
+        )} has been approved.`
+      );
+    }, 30000);
+  } else {
+    alert(
+      `Arrat-Bank wont be able to provide a loan of ${formatCurrency(
+        loanAmount,
+        currentAccount.currency,
+        currentAccount.locale
+      )}.`
+    );
   }
   inputLoanAmount.value = '';
 });
