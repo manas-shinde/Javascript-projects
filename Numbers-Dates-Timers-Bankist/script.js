@@ -209,9 +209,36 @@ const setCurrentTime = locale => {
 
   labelDate.textContent = Intl.DateTimeFormat(locale, option).format(now);
 };
+
+const startLogoutTimer = () => {
+  let time = 300;
+
+  const tick = () => {
+    let min = String(Math.trunc(time / 60)).padStart(2, 0);
+    let sec = String(Math.trunc(time % 60)).padStart(2, 0);
+
+    // Print the remaining time to dashboard
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When timer set to 0 second , stop timer and log-out user
+    if (time == 0) {
+      clearInterval(timer);
+
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrease time by 1s
+    time--;
+  };
+
+  // Call timer every second
+  tick();
+  let timer = setInterval(tick, 1000);
+};
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -234,6 +261,10 @@ btnLogin.addEventListener('click', function (e) {
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
+
+    // Start the Log out timer
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
 
     // Update UI
     updateUI(currentAccount);
@@ -264,6 +295,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Reset Timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -305,6 +340,10 @@ btnLoan.addEventListener('click', function (e) {
     );
   }
   inputLoanAmount.value = '';
+
+  // Reset Timer
+  clearInterval(timer);
+  timer = startLogoutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
