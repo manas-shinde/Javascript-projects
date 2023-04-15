@@ -46,3 +46,26 @@ btnScrollTo.addEventListener('click', e => {
   // Modern way to scroll
   // section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+// Page navigation
+// with below approach this call back function will attach to every link
+/*
+document.querySelector('.nav__link').forEach(function (element) {
+  element.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const id = this.getAttribute('href');
+
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+*/
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
