@@ -119,12 +119,75 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 ///////////////////////////////////////
 // Sticky menu navigation
-const intialCoords = section1.getBoundingClientRect();
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > intialCoords.top) {
-    nav.classList.add('sticky');
-  } else {
-    nav.classList.remove('sticky');
-  }
+// const intialCoords = section1.getBoundingClientRect();
+
+// window.addEventListener('scroll', () => {
+//   if (window.scrollY > intialCoords.top) {
+//     nav.classList.add('sticky');
+//   } else {
+//     nav.classList.remove('sticky');
+//   }
+// });
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = entries => {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
+headerObserver.observe(header);
+
+///////////////////////////////////////
+// Revealing section on scroll
+const allSections = document.querySelectorAll('.section');
+const revealSection = (entries, observe) => {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  observe.unobserve(entry.target);
+};
+const sectionObsever = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(section => {
+  sectionObsever.observe(section);
+  section.classList.add('section--hidden');
+});
+
+///////////////////////////////////////
+// Lazy loading of images
+const imgTarget = document.querySelectorAll('img[data-src]');
+
+const loadImg = (entries, observe) => {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  // Replace src image location with data src
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', e => {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observe.unobserve(entry.target);
+};
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+});
+imgTarget.forEach(img => imgObserver.observe(img));
