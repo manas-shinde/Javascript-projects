@@ -68,3 +68,27 @@ bmw.brake();
 mercedes.accelerate();
 mercedes.accelerate();
 mercedes.brake();
+
+///////////////////////////////////////
+// ES6 Classes
+
+// Class expression
+// const PersonCl = class {}
+
+// Class declaration
+class PersonCl {
+  // 1. Classes are NOT hoisted
+  // 2. Classes are first-class citizens
+  // 3. Classes are executed in strict mode
+
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const ms = new PersonCl('Manas', 2000);
+ms.greet();
