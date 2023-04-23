@@ -122,7 +122,7 @@ DATA CAR 1: 'Ford' going at 120 km/h
 GOOD LUCK 😀
 */
 
-class CarCL {
+class CarCl {
   constructor(make, speed) {
     this.make = make;
     this.speed = speed;
@@ -177,7 +177,7 @@ const Cars = function (make, speed) {
   this, (speed = speed);
 };
 
-Car.prototype.accelerate = function () {
+Cars.prototype.accelerate = function () {
   this.speed += 10;
   console.log(`${this.make} is just accelerate the speed!!`);
   console.log(
@@ -185,7 +185,7 @@ Car.prototype.accelerate = function () {
   );
 };
 
-Car.prototype.brake = function () {
+Cars.prototype.brake = function () {
   this.speed = this.speed - 5;
   console.log(`${this.make} is just appled the breake!!`);
   console.log(
@@ -217,3 +217,23 @@ tesla.chargeBattery(90);
 console.log(tesla);
 tesla.brake();
 tesla.accelerate();
+
+///////////////////////////////////////
+// Inheritance Between "Classes": ES6 Classes
+class StudentCl extends PersonCl {
+  constructor(firstName, birthYear, course) {
+    super(firstName, birthYear);
+    this.course = course;
+  }
+  introduce() {
+    console.log(
+      `Hello, My name is ${this._fullName} and I'm ${
+        2037 - this.birthYear
+      } old.`
+    );
+  }
+}
+
+const sg = new StudentCl('Sarah Gomez', 1989, 'Computer Science');
+console.dir(sg);
+sg.introduce();
