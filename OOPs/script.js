@@ -81,14 +81,29 @@ class PersonCl {
   // 2. Classes are first-class citizens
   // 3. Classes are executed in strict mode
 
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
   greet() {
-    console.log(`Hey ${this.firstName}`);
+    console.log(`Hey ${this._fullName}`);
+  }
+  // getters and setters
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`Given name ${name} is not a full name!!`);
+  }
+  // static method
+  static hey() {
+    console.log(`hey there!!`);
+    console.log(this);
   }
 }
 
-const ms = new PersonCl('Manas', 2000);
+const ms = new PersonCl('Manas Shinde', 2000);
 ms.greet();
+
+PersonCl.hey();
