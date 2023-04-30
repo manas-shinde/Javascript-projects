@@ -54,9 +54,21 @@ const renderCountry = data => {
 // getCountryData('India');
 // getCountryData('Portugal');
 
+const fetchData = (url, errMsg = 'Something went wrong!') => {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(` ${errMsg} : ${response.status}`);
+    }
+
+    return response.json();
+  });
+};
+
 const getCountryData = country => {
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
+  fetchData(
+    `https://restcountries.com/v3.1/name/${country}`,
+    'Country not found'
+  )
     .then(data => renderCountry(data[0]))
     .catch(err => {
       renderError(`Something went wrong : ${err.message}`);
@@ -67,4 +79,4 @@ const getCountryData = country => {
     });
 };
 
-getCountryData('usa');
+getCountryData('manas');
