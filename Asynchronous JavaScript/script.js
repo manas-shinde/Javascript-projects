@@ -4,6 +4,7 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
+
 const renderCountry = data => {
   let currenciesName;
   for (let dt in data.currencies) {
@@ -35,17 +36,25 @@ const renderCountry = data => {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
-function getCountryData(countryName) {
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.com/v3.1/name/${countryName}`);
-  request.send();
+// function getCountryData(countryName) {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', `https://restcountries.com/v3.1/name/${countryName}`);
+//   request.send();
 
-  request.addEventListener('load', function () {
-    const [data] = JSON.parse(this.responseText);
-    console.log(data);
-    renderCountry(data);
-  });
-}
+//   request.addEventListener('load', function () {
+//     const [data] = JSON.parse(this.responseText);
+//     console.log(data);
+//     renderCountry(data);
+//   });
+// }
 
-getCountryData('India');
-getCountryData('Portugal');
+// getCountryData('India');
+// getCountryData('Portugal');
+
+const getCountryData = country => {
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then(response => response.json())
+    .then(data => renderCountry(data[0]));
+};
+
+getCountryData('usa');
