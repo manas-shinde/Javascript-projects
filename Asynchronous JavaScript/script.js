@@ -4,6 +4,9 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
+const renderError = msg => {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+};
 
 const renderCountry = data => {
   let currenciesName;
@@ -54,7 +57,14 @@ const renderCountry = data => {
 const getCountryData = country => {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(response => response.json())
-    .then(data => renderCountry(data[0]));
+    .then(data => renderCountry(data[0]))
+    .catch(err => {
+      renderError(`Something went wrong : ${err.message}`);
+      console.log(err);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
 
 getCountryData('usa');
