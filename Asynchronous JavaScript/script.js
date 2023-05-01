@@ -224,6 +224,9 @@ const getPosition = () => {
   });
 };
 
+///////////////////////////////////////
+// Returning Values from Async Functions
+
 const whereAmI = async () => {
   const position = await getPosition();
 
@@ -277,12 +280,14 @@ const whereAmI = async () => {
 //   console.log(`3: finished getting.`);
 // })();
 
+///////////////////////////////////////
+// Running Promises in Parallel
 const get3CountriesData = async (country1, country2, country3) => {
   try {
     const data = await Promise.all([
-      fetchData(`https://restcountries.com/v3.1/name/${country1}`),
-      fetchData(`https://restcountries.com/v3.1/name/${country2}`),
-      fetchData(`https://restcountries.com/v3.1/name/${country3}`),
+      fetchData(`https://restcountries.eu/rest/v2/name/${country1}`),
+      fetchData(`https://restcountries.eu/rest/v2/name/${country2}`),
+      fetchData(`https://restcountries.eu/rest/v2/name/${country3}`),
     ]);
 
     console.log(data.map(d => d[0]));
@@ -291,4 +296,55 @@ const get3CountriesData = async (country1, country2, country3) => {
   }
 };
 
-get3CountriesData('India', 'china', 'India');
+// get3CountriesData('india', 'china', 'usa');
+
+///////////////////////////////////////
+// Other Promise Combinators: race, allSettled and any
+// Promise.race
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.eu/rest/v2/name/italy`),
+    getJSON(`https://restcountries.eu/rest/v2/name/egypt`),
+    getJSON(`https://restcountries.eu/rest/v2/name/mexico`),
+  ]);
+  console.log(res[0]);
+})();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long!'));
+    }, sec * 1000);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.eu/rest/v2/name/tanzania`),
+  timeout(5),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+// Promise.allSettled
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('ERROR'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res));
+
+Promise.all([
+  Promise.resolve('Success'),
+  Promise.reject('ERROR'),
+  Promise.resolve('Another success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// Promise.any [ES2021]
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('ERROR'),
+  Promise.resolve('Another success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
