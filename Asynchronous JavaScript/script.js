@@ -230,22 +230,29 @@ const whereAmI = async () => {
   const position = await getPosition();
 
   const { latitude, longitude } = position.coords;
+  try {
+    const reverseGeocoding = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+    );
+    if (!reverseGeocoding.ok)
+      throw new Error('Error while getting data from reverse geocoding ');
 
-  const reverseGeocoding = await fetch(
-    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-  );
+    const responseJson = await reverseGeocoding.json();
 
-  const responseJson = await reverseGeocoding.json();
+    let countryName = responseJson.countryName;
 
-  let countryName = responseJson.countryName;
+    const fetchCountryData = await fetch(
+      `https://restcountries.com/v2/name/${countryName}`
+    );
+    if (!fetchCountryData.ok)
+      throw new Error('Error while retriving country data');
 
-  const fetchCountryData = await fetch(
-    `https://restcountries.com/v2/name/${countryName}`
-  );
+    const dataJson = await fetchCountryData.json();
 
-  const dataJson = await fetchCountryData.json();
-
-  console.log(dataJson);
+    console.log(dataJson);
+  } catch (err) {
+    console.error(`We got an error  :${err}`);
+  }
 };
 
 whereAmI();
