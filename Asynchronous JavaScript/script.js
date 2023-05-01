@@ -250,9 +250,31 @@ const whereAmI = async () => {
     const dataJson = await fetchCountryData.json();
 
     console.log(dataJson);
+
+    return `You are in ${responseJson.locality}, ${responseJson.principalSubdivision}(${responseJson.countryName})`;
   } catch (err) {
     console.error(`We got an error  :${err}`);
+    throw err;
   }
 };
 
-whereAmI();
+// console.log(`1 : will get location`);
+// let msg = whereAmI();
+// // Even after promise is fullfiled the msg will not be displayed. so to overcome that we can use then()
+// console.warn(msg);
+// console.log(`3: finished getting.`);
+
+// console.log(`1 : will get location`);
+// whereAmI().then(msg => console.warn(msg));
+// console.log(`3: finished getting.`);
+
+console.log(`1 : will get location`);
+(async function () {
+  try {
+    const msg = await whereAmI();
+    console.warn(`2 : ${msg}`);
+  } catch (err) {
+    console.error(err.message);
+  }
+  console.log(`3: finished getting.`);
+})();
