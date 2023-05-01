@@ -197,22 +197,55 @@ const createImage = imgPath => {
   });
 };
 
-createImage('img/img-1.jpg')
-  .then(img => {
-    currentImage = img;
-    console.log('Image 1 loaded!');
-    return wait(2);
-  })
-  .then(() => {
-    currentImage.style.display = 'none';
-    return createImage('img/img-2.jpg');
-  })
-  .then(img => {
-    currentImage = img;
-    console.log('Image 2 loaded!');
-    return wait(2);
-  })
-  .then(() => {
-    currentImage.style.display = 'none';
-  })
-  .catch(err => console.error(err));
+// createImage('img/img-1.jpg')
+//   .then(img => {
+//     currentImage = img;
+//     console.log('Image 1 loaded!');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImage.style.display = 'none';
+//     return createImage('img/img-2.jpg');
+//   })
+//   .then(img => {
+//     currentImage = img;
+//     console.log('Image 2 loaded!');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImage.style.display = 'none';
+//   })
+//   .catch(err => console.error(err));
+
+///////////////////////////////
+// Async and await
+
+const getPosition = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async () => {
+  const position = await getPosition();
+
+  const { latitude, longitude } = position.coords;
+
+  const reverseGeocoding = await fetch(
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+  );
+
+  const responseJson = await reverseGeocoding.json();
+
+  let countryName = responseJson.countryName;
+
+  const fetchCountryData = await fetch(
+    `https://restcountries.com/v2/name/${countryName}`
+  );
+
+  const dataJson = await fetchCountryData.json();
+
+  console.log(dataJson);
+};
+
+whereAmI();
