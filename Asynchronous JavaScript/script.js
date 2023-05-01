@@ -54,15 +54,13 @@ const renderCountry = data => {
 // getCountryData('India');
 // getCountryData('Portugal');
 
-// const fetchData = (url, errMsg = 'Something went wrong!') => {
-//   return fetch(url).then(response => {
-//     if (!response.ok) {
-//       throw new Error(` ${errMsg} : ${response.status}`);
-//     }
+const fetchData = (url, errMsg = 'Something went wrong!') => {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(` ${errMsg} : ${response.status}`);
 
-//     return response.json();
-//   });
-// };
+    return response.json();
+  });
+};
 
 // const getCountryData = country => {
 //   fetchData(
@@ -268,13 +266,29 @@ const whereAmI = async () => {
 // whereAmI().then(msg => console.warn(msg));
 // console.log(`3: finished getting.`);
 
-console.log(`1 : will get location`);
-(async function () {
+// console.log(`1 : will get location`);
+// (async function () {
+//   try {
+//     const msg = await whereAmI();
+//     console.warn(`2 : ${msg}`);
+//   } catch (err) {
+//     console.error(err.message);
+//   }
+//   console.log(`3: finished getting.`);
+// })();
+
+const get3CountriesData = async (country1, country2, country3) => {
   try {
-    const msg = await whereAmI();
-    console.warn(`2 : ${msg}`);
-  } catch (err) {
-    console.error(err.message);
+    const data = await Promise.all([
+      fetchData(`https://restcountries.com/v3.1/name/${country1}`),
+      fetchData(`https://restcountries.com/v3.1/name/${country2}`),
+      fetchData(`https://restcountries.com/v3.1/name/${country3}`),
+    ]);
+
+    console.log(data.map(d => d[0]));
+  } catch (error) {
+    console.error(error);
   }
-  console.log(`3: finished getting.`);
-})();
+};
+
+get3CountriesData('India', 'china', 'India');
